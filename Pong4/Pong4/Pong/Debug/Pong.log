@@ -1,3 +1,7 @@
 ﻿  main.cpp
-C:\Users\Phoen\source\repos\Cpts_122\Pong4\Pong4\Pong\main.cpp(102,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Pong.vcxproj -> C:\Users\Phoen\source\repos\Cpts_122\Pong4\Pong4\Debug\Pong.exe
+C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Pong\Obstacle.hpp(18,21): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Pong.vcxproj -> C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Debug\Pong.exe
