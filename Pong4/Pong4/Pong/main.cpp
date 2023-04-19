@@ -8,6 +8,9 @@ using std::vector;
 
 int main()
 {
+	sf::Texture testTexture;
+	testTexture.loadFromFile("spriteTest.png");
+
 	// the speed at which obstacles should move
 	float curSpeed = 1;
 
@@ -28,9 +31,29 @@ int main()
 	obVect.push_back(&o2);
 	obVect.push_back(&o3);
 
+	int generationCounter = 100;
+
+
+	/// sprite testing
+	//sf::Texture testTexture;
+	//testTexture.loadFromFile("spriteTest.png");
+	/*if (!testTexture.loadFromFile("sprites/spriteTest.png")) {
+		std::cout << "------------error--------" << std::endl;
+	}*/
+
+	sf::Sprite testSprite;
+	testSprite.setTexture(testTexture);
 
 	while (window.isOpen())
 	{
+		generationCounter--;
+		if (generationCounter == 0) {
+			generationCounter = 100;
+			Obstacle* oT = new Obstacle(100, sf::Vector2f(500, 500), sf::Color::Red);
+			obVect.push_back(oT);
+		}
+
+
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
@@ -55,6 +78,7 @@ int main()
 			window.draw(*i);
 		}
 
+		window.draw(testSprite);
 		window.display();
 	}
 
