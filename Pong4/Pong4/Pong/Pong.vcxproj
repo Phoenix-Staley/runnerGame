@@ -153,11 +153,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.hpp" />
+    <ClInclude Include="Hurdle.hpp" />
     <ClInclude Include="Obstacle.hpp" />
     <ClInclude Include="Paddle.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="spriteTest.png" />
+    <Image Include="testDirt.png" />
+    <Image Include="testShrub.png" />
+    <Image Include="testTree.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
