@@ -3,13 +3,28 @@
 #include<iostream>
 
 #include "Obstacle.hpp"
+#include "Hurdle.hpp"
 
 using std::vector;
 
 int main()
 {
-	sf::Texture testTexture;
-	testTexture.loadFromFile("spriteTest.png");
+	// pixels per unit
+	int UNITSIZE = 96;
+
+	/// dirt texture
+	sf::Texture blockTexture;	
+	blockTexture.loadFromFile("testDirt.png");
+	blockTexture.setRepeated(true);
+	
+	/// tree texture
+	sf::Texture treeTexture;	
+	treeTexture.loadFromFile("testTree.png");
+	//treeTexture.setRepeated(true);
+
+	/// shrub texture
+	sf::Texture shrubTexture;
+	shrubTexture.loadFromFile("testShrub.png");
 
 	// the speed at which obstacles should move
 	float curSpeed = 1;
@@ -22,35 +37,33 @@ int main()
 	vector<Obstacle*> obVect; // we need to have pointers, copies don't work I tried
 
 	// objects for testing
-	Obstacle o1(100, sf::Vector2f(500, 500), sf::Color::Red);
-	Obstacle o2(100, sf::Vector2f(600, 600), sf::Color::Red);
-	Obstacle o3(100, sf::Vector2f(700, 700), sf::Color::Red);
+	Obstacle o1(1, sf::Vector2f(500-(96*2), 500), blockTexture);
+	Obstacle o2(1, sf::Vector2f(596 - (96 * 2), 600), blockTexture);
+	Obstacle o3(1, sf::Vector2f(692 - (96 * 2), 700), blockTexture);
 
 	// push_back is the same as inserting, the insert() function doens't work like you'd think
 	obVect.push_back(&o1);
 	obVect.push_back(&o2);
 	obVect.push_back(&o3);
 
-	int generationCounter = 100;
+	// 96 is pixels per unit/block
+	int generationCounter = UNITSIZE * 3;
 
-
-	/// sprite testing
-	//sf::Texture testTexture;
-	//testTexture.loadFromFile("spriteTest.png");
-	/*if (!testTexture.loadFromFile("sprites/spriteTest.png")) {
-		std::cout << "------------error--------" << std::endl;
-	}*/
-
-	sf::Sprite testSprite;
-	testSprite.setTexture(testTexture);
 
 	while (window.isOpen())
 	{
 		generationCounter--;
 		if (generationCounter == 0) {
-			generationCounter = 100;
-			Obstacle* oT = new Obstacle(100, sf::Vector2f(500, 500), sf::Color::Red);
+			generationCounter = UNITSIZE * 3; // 3 is the amount of blocks
+			Obstacle* oT = new Obstacle(3, sf::Vector2f(700, 500), blockTexture);
+
+			// polymorphism baby!
+			Obstacle* hT = new Hurdle(sf::Vector2f(700, 500), treeTexture);
+			Obstacle* sT = new Hurdle(sf::Vector2f(882, 500), shrubTexture);
+
 			obVect.push_back(oT);
+			obVect.push_back(sT);
+			obVect.push_back(hT);
 		}
 
 
@@ -71,6 +84,7 @@ int main()
 			i->move(-i->getSpeed(), 0);
 		}
 
+		// clear the window before drawing shit
 		window.clear();
 
 		// draw each obstacle
@@ -78,7 +92,6 @@ int main()
 			window.draw(*i);
 		}
 
-		window.draw(testSprite);
 		window.display();
 	}
 

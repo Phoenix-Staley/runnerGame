@@ -4,20 +4,27 @@
 
 #include <SFML/Graphics.hpp>
 
-class Obstacle : public sf::RectangleShape {
+class Obstacle : public sf::Sprite {
 
-private:
+protected:
 	float speed;
+	sf::Texture texture;
 
 
 public:
 
-	// constructor
-	Obstacle(int width, const sf::Vector2f& nPos, const sf::Color& nColor) {
+	Obstacle() {
+		speed = 0;
+	}
 
-		sf::Vector2f size(width, 2000);
-		setSize(size);
-		setFillColor(nColor);
+	// constructor
+	Obstacle(int width, const sf::Vector2f& nPos, sf::Texture & nText) {
+
+
+		setTexture(nText);
+		setScale(6, 6);
+		setTextureRect(sf::IntRect(0, 0, 16 * width, 1600));
+		//setScale(3, 10);
 
 		// position is at top left of geometry
 		setPosition(nPos);
