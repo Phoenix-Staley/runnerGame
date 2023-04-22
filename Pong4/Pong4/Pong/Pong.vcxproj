@@ -152,7 +152,9 @@
     <ClCompile Include="Obstacle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.hpp" />
     <ClInclude Include="Ball.hpp" />
+    <ClInclude Include="Grass.hpp" />
     <ClInclude Include="Hurdle.hpp" />
     <ClInclude Include="Obstacle.hpp" />
     <ClInclude Include="Paddle.hpp" />
@@ -160,6 +162,7 @@
   <ItemGroup>
     <Image Include="spriteTest.png" />
     <Image Include="testDirt.png" />
+    <Image Include="testGrass.png" />
     <Image Include="testShrub.png" />
     <Image Include="testTree.png" />
   </ItemGroup>
