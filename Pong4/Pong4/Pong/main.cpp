@@ -1,84 +1,97 @@
-#include<SFML/Graphics.hpp>
-#include<vector>
-#include<iostream>
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <vector>
 
-#include "Obstacle.hpp"
+#include "Animation.hpp"
+#include "Grass.hpp"
 #include "Hurdle.hpp"
+#include "Obstacle.hpp"
 #include "Spawner.hpp"
 
 using std::vector;
 
-int main()
-{
-	int UNITSIZE = 96;
+int main() {
+    int UNITSIZE = 96;
 
-	sf::Texture textures[3];
+    sf::Texture textures[3];
 
-	// dirt texture
-	sf::Texture &blockTexture = textures[0];	
-	blockTexture.loadFromFile("testDirt.png");
-	blockTexture.setRepeated(true);
-	
-	// tree texture
-	sf::Texture &treeTexture = textures[1];	
-	treeTexture.loadFromFile("testTree.png");
-	//treeTexture.setRepeated(true);
+    // dirt texture
+    sf::Texture &blockTexture = textures[0];
+    blockTexture.loadFromFile("testDirt.png");
+    blockTexture.setRepeated(true);
 
-	// shrub texture
-	sf::Texture &shrubTexture = textures[2];
-	shrubTexture.loadFromFile("testShrub.png");
+    /// grass texture
+    sf::Texture grassTexture;
+    grassTexture.loadFromFile("testGrass.png");
+    grassTexture.setRepeated(true);
 
-	// the speed at which obstacles should move
-	float curSpeed = 1;
+    // tree texture
+    sf::Texture &treeTexture = textures[1];
+    treeTexture.loadFromFile("testTree.png");
+    // treeTexture.setRepeated(true);
 
-	// self explanatory
-	sf::RenderWindow window(sf::VideoMode(1000, 1000), "runner game");
-	window.setFramerateLimit(100);
+    // shrub texture
+    sf::Texture &shrubTexture = textures[2];
+    shrubTexture.loadFromFile("testShrub.png");
 
-	// creates the collection of obstacles
-	vector<Obstacle*> obVect; // we need to have pointers, copies don't work I tried
+    // the speed at which obstacles should move
+    float curSpeed = 1;
 
-	// 96 is pixels per unit/block
-	int generationCounter = 0;
+    // self explanatory
+    sf::RenderWindow window(sf::VideoMode(1000, 1000), "runner game");
+    window.setFramerateLimit(100);
 
-	spawnStartingGround(obVect, textures[0], UNITSIZE);
+    // creates the collection of obstacles
+    vector<Obstacle *>
+        obVect;  // we need to have pointers, copies don't work I tried
 
-	while (window.isOpen())
-	{
-		if (generationCounter == 0) {
-			spawnNewGround(generationCounter, obVect, textures, UNITSIZE);
-		}
+    // 96 is pixels per unit/block
+    int generationCounter = 0;
 
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed) {
-				window.close();
-			}
-		}
+    spawnStartingGround(obVect, textures[0], UNITSIZE);
 
-		// set each obstacles speed
-		for (auto i : obVect) {
-			i->setSpeed(curSpeed);
-		}
+    /// player animation test
+    Animation player(sf::Vector2f(500, 404), 10);
 
-		// move each obstacle
-		for (auto i : obVect) {
-			i->move(-i->getSpeed(), 0);
-		}
+    while (window.isOpen()) {
+        if (generationCounter == 0) {
+            spawnNewGround(generationCounter, obVect, textures, UNITSIZE);
+        }
 
-		// clear the window before drawing shit
-		window.clear();
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
+        }
 
-		// draw each obstacle
-		for (auto i : obVect) {
-			window.draw(*i);
-		}
+        // set each obstacles speed
+        for (auto i : obVect) {
+            i->setSpeed(curSpeed);
+        }
 
-		window.display();
+        // move each obstacle
+        for (auto i : obVect) {
+            i->move(-i->getSpeed(), 0);
+        }
 
-		generationCounter--;
-	}
+        /// update animation fram
+        player.frameUpdate();
 
-	return 0;
+        // clear the window before drawing shit
+        window.clear();
+
+        // draw each obstacle
+        for (auto i : obVect) {
+            window.draw(*i);
+        }
+
+        window.draw(player);
+
+        window.display();
+
+        generationCounter--;
+    }
+
+    return 0;
 }
