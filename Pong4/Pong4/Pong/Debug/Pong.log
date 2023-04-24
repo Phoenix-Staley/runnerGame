@@ -1,3 +1,43 @@
-﻿  main.cpp
-C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Pong\Hurdle.hpp(19,16): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  Pong.vcxproj -> C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Debug\Pong.exe
+﻿  Spawner.cpp
+C:\Users\Phoen\source\repos\Cpts_122\runnerGame\Pong4\Pong4\Pong\Hurdle.hpp(19,16): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Phoen\source\repos\Cpts_122\runnerGame\Pong4\Pong4\Pong\Spawner.cpp(18,52): warning C4244: 'argument': conversion from 'const int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Phoen\source\repos\Cpts_122\runnerGame\Pong4\Pong4\Pong\Spawner.cpp(18,46): warning C4244: 'argument': conversion from 'const int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Phoen\source\repos\Cpts_122\runnerGame\Pong4\Pong4\Pong\Spawner.cpp(21,47): warning C4244: 'argument': conversion from 'const int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Phoen\source\repos\Cpts_122\runnerGame\Pong4\Pong4\Pong\Spawner.cpp(21,41): warning C4244: 'argument': conversion from 'const int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Phoen\source\repos\Cpts_122\runnerGame\Pong4\Pong4\Pong\Spawner.cpp(22,53): warning C4244: 'argument': conversion from 'const int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Phoen\source\repos\Cpts_122\runnerGame\Pong4\Pong4\Pong\Spawner.cpp(22,46): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Phoen\source\repos\Cpts_122\runnerGame\Pong4\Pong4\Pong\Spawner.cpp(35,61): warning C4244: 'argument': conversion from 'const int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Phoen\source\repos\Cpts_122\runnerGame\Pong4\Pong4\Pong\Spawner.cpp(35,55): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Pong.vcxproj -> C:\Users\Phoen\source\repos\Cpts_122\runnerGame\Pong4\Pong4\Debug\Pong.exe

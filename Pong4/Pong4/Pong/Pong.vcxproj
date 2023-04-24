@@ -150,12 +150,14 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Obstacle.cpp" />
+    <ClCompile Include="Spawner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.hpp" />
     <ClInclude Include="Hurdle.hpp" />
     <ClInclude Include="Obstacle.hpp" />
     <ClInclude Include="Paddle.hpp" />
+    <ClInclude Include="Spawner.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="spriteTest.png" />
