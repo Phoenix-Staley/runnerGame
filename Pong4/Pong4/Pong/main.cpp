@@ -3,6 +3,7 @@
 #include<iostream>
 
 #include "Obstacle.hpp"
+#include "Player.hpp"
 
 using std::vector;
 
@@ -22,6 +23,9 @@ int main()
 	Obstacle o1(100, sf::Vector2f(500, 500), sf::Color::Red);
 	Obstacle o2(100, sf::Vector2f(600, 600), sf::Color::Red);
 	Obstacle o3(100, sf::Vector2f(700, 700), sf::Color::Red);
+
+	// Player object
+	Player player(sf::Vector2f(100, 100), sf::Vector2f(500, 200));
 
 	// push_back is the same as inserting, the insert() function doens't work like you'd think
 	obVect.push_back(&o1);
@@ -48,12 +52,18 @@ int main()
 			i->move(-i->getSpeed(), 0);
 		}
 
+		// update player location
+		player.updateMovement();
+
 		window.clear();
 
 		// draw each obstacle
 		for (auto i : obVect) {
 			window.draw(*i);
 		}
+
+		// draw player
+		window.draw(player);
 
 		window.display();
 	}
