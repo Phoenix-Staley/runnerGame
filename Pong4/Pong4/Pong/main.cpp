@@ -4,6 +4,8 @@
 
 #include "Obstacle.hpp"
 #include "Hurdle.hpp"
+#include "Animation.hpp"
+#include "Grass.hpp"
 
 using std::vector;
 
@@ -16,6 +18,11 @@ int main()
 	sf::Texture blockTexture;	
 	blockTexture.loadFromFile("testDirt.png");
 	blockTexture.setRepeated(true);
+
+	/// grass texture
+	sf::Texture grassTexture;
+	grassTexture.loadFromFile("testGrass.png");
+	grassTexture.setRepeated(true);
 	
 	/// tree texture
 	sf::Texture treeTexture;	
@@ -50,6 +57,10 @@ int main()
 	int generationCounter = UNITSIZE * 3;
 
 
+	/// player animation test
+	Animation player(sf::Vector2f(500, 404), 10);
+
+
 	while (window.isOpen())
 	{
 		generationCounter--;
@@ -61,9 +72,13 @@ int main()
 			Obstacle* hT = new Hurdle(sf::Vector2f(700, 500), treeTexture);
 			Obstacle* sT = new Hurdle(sf::Vector2f(882, 500), shrubTexture);
 
+			// grass
+			Obstacle* gT = new Grass(3, sf::Vector2f(700, 500), grassTexture);
+
 			obVect.push_back(oT);
 			obVect.push_back(sT);
 			obVect.push_back(hT);
+			obVect.push_back(gT);
 		}
 
 
@@ -84,13 +99,21 @@ int main()
 			i->move(-i->getSpeed(), 0);
 		}
 
+
+		/// update animation fram
+		player.frameUpdate();
+
 		// clear the window before drawing shit
 		window.clear();
+
+		
 
 		// draw each obstacle
 		for (auto i : obVect) {
 			window.draw(*i);
 		}
+
+		window.draw(player);
 
 		window.display();
 	}

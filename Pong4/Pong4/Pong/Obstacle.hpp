@@ -8,7 +8,6 @@ class Obstacle : public sf::Sprite {
 
 protected:
 	float speed;
-	sf::Texture texture;
 
 
 public:
@@ -22,6 +21,7 @@ public:
 
 
 		setTexture(nText);
+
 		setScale(6, 6);
 		setTextureRect(sf::IntRect(0, 0, 16 * width, 1600));
 		//setScale(3, 10);
