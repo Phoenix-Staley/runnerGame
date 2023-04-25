@@ -4,11 +4,36 @@
 
 #include "Obstacle.hpp"
 #include "Player.hpp"
+#include "Hurdle.hpp"
+#include "Animation.hpp"
+#include "Grass.hpp"
 
 using std::vector;
 
 int main()
 {
+	// pixels per unit
+	int UNITSIZE = 96;
+
+	/// dirt texture
+	sf::Texture blockTexture;	
+	blockTexture.loadFromFile("testDirt.png");
+	blockTexture.setRepeated(true);
+
+	/// grass texture
+	sf::Texture grassTexture;
+	grassTexture.loadFromFile("testGrass.png");
+	grassTexture.setRepeated(true);
+	
+	/// tree texture
+	sf::Texture treeTexture;	
+	treeTexture.loadFromFile("testTree.png");
+	//treeTexture.setRepeated(true);
+
+	/// shrub texture
+	sf::Texture shrubTexture;
+	shrubTexture.loadFromFile("testShrub.png");
+
 	// the speed at which obstacles should move
 	float curSpeed = 1;
 	bool touchingGround = false;
@@ -21,9 +46,9 @@ int main()
 	vector<Obstacle*> obVect; // we need to have pointers, copies don't work I tried
 
 	// objects for testing
-	Obstacle o1(100, sf::Vector2f(500, 500), sf::Color::Red);
-	Obstacle o2(100, sf::Vector2f(600, 600), sf::Color::Red);
-	Obstacle o3(100, sf::Vector2f(700, 700), sf::Color::Red);
+	Obstacle o1(1, sf::Vector2f(500-(96*2), 500), blockTexture);
+	Obstacle o2(1, sf::Vector2f(596 - (96 * 2), 600), blockTexture);
+	Obstacle o3(1, sf::Vector2f(692 - (96 * 2), 700), blockTexture);
 
 	// Player object
 	Player player(sf::Vector2f(100, 100), sf::Vector2f(500, 200));
@@ -33,10 +58,35 @@ int main()
 	obVect.push_back(&o2);
 	obVect.push_back(&o3);
 
+	// 96 is pixels per unit/block
+	int generationCounter = UNITSIZE * 3;
+
+
+	/// player animation test
+	Animation player(sf::Vector2f(500, 404), 10);
+
 
 	while (window.isOpen())
 	{
 		touchingGround = false;
+		generationCounter--;
+		if (generationCounter == 0) {
+			generationCounter = UNITSIZE * 3; // 3 is the amount of blocks
+			Obstacle* oT = new Obstacle(3, sf::Vector2f(700, 500), blockTexture);
+
+			// polymorphism baby!
+			Obstacle* hT = new Hurdle(sf::Vector2f(700, 500), treeTexture);
+			Obstacle* sT = new Hurdle(sf::Vector2f(882, 500), shrubTexture);
+
+			// grass
+			Obstacle* gT = new Grass(3, sf::Vector2f(700, 500), grassTexture);
+
+			obVect.push_back(oT);
+			obVect.push_back(sT);
+			obVect.push_back(hT);
+			obVect.push_back(gT);
+		}
+
 
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -66,7 +116,14 @@ int main()
 		// update player location
 		player.updateMovement(touchingGround);
 
+
+		/// update animation fram
+		player.frameUpdate();
+
+		// clear the window before drawing shit
 		window.clear();
+
+		
 
 		// draw each obstacle
 		for (auto i : obVect) {

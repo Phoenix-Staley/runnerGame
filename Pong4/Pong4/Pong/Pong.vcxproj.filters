@@ -38,5 +38,31 @@
     <ClInclude Include="Player.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Hurdle.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Grass.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="spriteTest.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="testDirt.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="testTree.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="testShrub.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="testGrass.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
