@@ -34,6 +34,12 @@ public:
 		speed = 0;
 	}
 
+	// sets speed and moves the object
+	virtual void frameUpdate(int nSpeed) {
+		setSpeed(nSpeed);
+		move(-speed, 0);
+	}
+
 	// sets speed
 	void setSpeed(float s) {
 		speed = s;
@@ -43,6 +49,4 @@ public:
 	float getSpeed() {
 		return speed;
 	}
-
-
 };

@@ -38,3 +38,7 @@ void Player::updateMovement(bool isTouchingGround)
 		}
 	}
 }
+
+double Player::getVelocity() {
+	return fallVelocity;
+}

@@ -10,6 +10,7 @@ Side-scrolling runner game in which the player must dodge obstacles and pits to 
 
 #include "Animation.hpp"
 #include "Grass.hpp"
+#include "Cloud.hpp"
 #include "Hurdle.hpp"
 #include "Obstacle.hpp"
 #include "Player.hpp"
@@ -18,6 +19,7 @@ Side-scrolling runner game in which the player must dodge obstacles and pits to 
 using std::vector;
 
 int main() {
+
     int UNITSIZE = 96;
     bool gameOver = false;
     int score = 0;
@@ -33,29 +35,39 @@ int main() {
     scoreText.setPosition(760, 20);
     scoreText.setCharacterSize(36);
 
-    sf::Texture textures[4];
+    // added cloud texture to the array of textures (pos 4)
+    sf::Texture textures[5];
 
     // dirt texture
     sf::Texture &blockTexture = textures[0];
-    blockTexture.loadFromFile("testDirt.png");
+    blockTexture.loadFromFile("dirt.png");
     blockTexture.setRepeated(true);
 
     // tree texture
     sf::Texture &treeTexture = textures[1];
-    treeTexture.loadFromFile("testTree.png");
-    // treeTexture.setRepeated(true);
+    treeTexture.loadFromFile("tree.png");
+  
     // the speed at which obstacles should move
     double currSpeed = 4;
     bool touchingGround = false;
 
     // shrub texture
     sf::Texture &shrubTexture = textures[2];
-    shrubTexture.loadFromFile("testShrub.png");
+    shrubTexture.loadFromFile("bush.png");
 
     // grass texture
     sf::Texture &grassTexture = textures[3];
-    grassTexture.loadFromFile("testGrass.png");
+    grassTexture.loadFromFile("grass.png");
     grassTexture.setRepeated(true);
+
+    // cloud texture
+    sf::Texture& cloudTexture = textures[4];
+    cloudTexture.loadFromFile("cloud.png");
+
+    // sky texture
+    sf::Texture skyTexture;
+    skyTexture.loadFromFile("sky.png");
+    skyTexture.setRepeated(true);
 
     // self explanatory
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "runner game", sf::Style::Close);
@@ -75,6 +87,17 @@ int main() {
     // player animation test
     Animation playerAnim(sf::Vector2f(500, 404), 10);
 
+
+    // cloud test
+    Cloud cloud(sf::Vector2f(500, 100), cloudTexture);
+
+    // the sky stuff
+    // i didn't make it a class because its just a static sprite
+    sf::Sprite sky;
+    sky.setTexture(skyTexture);
+    sky.setTextureRect(sf::IntRect(0, 0, 1600, 1600));
+
+
     while (window.isOpen()) {
         touchingGround = false;
 
@@ -93,18 +116,20 @@ int main() {
             }
         }
 
-        // set each obstacles speed
+        // update each object
         for (auto i : obVect) {
-            i->setSpeed(currSpeed);
-        }
-
-        // move each obstacle
-        for (auto i : obVect) {
-            i->move(-i->getSpeed(), 0);
+            i->frameUpdate(currSpeed);
         }
 
         // clear the window before drawing stuff
         window.clear();
+
+        // draw the sky
+        window.draw(sky);
+
+        // draw test cloud
+        cloud.frameUpdate(currSpeed);
+        window.draw(cloud);
 
         // draw each obstacle
         for (auto i : obVect) {
@@ -129,7 +154,7 @@ int main() {
         if (!gameOver)
         {
             player.updateMovement(touchingGround);
-            playerAnim.frameUpdate();
+            playerAnim.frameUpdate(player.getVelocity());
             score++;
             scoreText.setString(std::to_string(score));
         }

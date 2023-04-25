@@ -7,7 +7,8 @@
 class Animation : public sf::Sprite {
 
 private:
-	sf::Texture sprites[6];
+	sf::Texture sprites[7];
+	//sf::Texture jumpSprite;
 	int animationCount = 0;
 	int frameCount = 0;
 	int frameRate = 10;
@@ -22,6 +23,10 @@ private:
 		setTexture(sprites[animationCount]);
 	}
 
+	void jumpSprite() {
+		setTexture(sprites[6]);
+	}
+
 public:
 
 	Animation(const sf::Vector2f& nPos, int nFrameRate) {
@@ -33,6 +38,8 @@ public:
 		sprites[4].loadFromFile("player_sprites/run2.png");
 		sprites[5].loadFromFile("player_sprites/run1.png");
 
+		sprites[6].loadFromFile("player_sprites/jump.png");
+
 		setScale(6, 6);
 		animationCount = 0;
 		frameRate = nFrameRate;
@@ -42,12 +49,17 @@ public:
 		setPosition(nPos);
 	}
 
-	void frameUpdate() {
+	void frameUpdate(double jumpSpeed) {
 
 		frameCount--;
-		if (frameCount < 0) {
-			frameCount = frameRate;
-			updateSprite();
+		if (jumpSpeed == 0) {
+			if (frameCount < 0) {
+				frameCount = frameRate;
+				updateSprite();
+			}
+		}
+		else {
+			jumpSprite();
 		}
 	}
 
