@@ -19,7 +19,7 @@ public:
 	void updateMovement(bool isTouchingGround);
 private:
 	double fallVelocity = 0;
-	const double jumpSpeed = -10;
+	const double jumpSpeed = -7;
 	clock_t jumpTime = NULL;
 	const int maxJumpTime = 20;
 };

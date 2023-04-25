@@ -45,7 +45,7 @@ int main() {
     treeTexture.loadFromFile("testTree.png");
     // treeTexture.setRepeated(true);
     // the speed at which obstacles should move
-    float curSpeed = 1;
+    double currSpeed = 4;
     bool touchingGround = false;
 
     // shrub texture
@@ -57,15 +57,11 @@ int main() {
     grassTexture.loadFromFile("testGrass.png");
     grassTexture.setRepeated(true);
 
-    // the speed at which obstacles should move
-    double currSpeed = 4;
-    double originalSpeed = currSpeed;
-
     // self explanatory
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "runner game", sf::Style::Close);
     window.setFramerateLimit(100);
     // Player object
-    Player player(sf::Vector2f(90, 95), sf::Vector2f(500, 200));
+    Player player(sf::Vector2f(90, 95), sf::Vector2f(50, 200));
 
     // creates the collection of obstacles
     // we need to have pointers, copies don't work I tried
