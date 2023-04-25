@@ -5,6 +5,7 @@
 Spawner::Spawner(int currHeight, int timeToObstacle, const int unitSize, sf::Texture* textures, std::vector<Obstacle*>* objectVect, double *currSpeed) {
 	this->currSpeed = currSpeed;
 	this->speedIncrease = *currSpeed / 30;
+	*(this->currSpeed) += this->speedIncrease;
 	this->objectVect = objectVect;
 	this->currHeight = currHeight;
 	this->timeToObstacle = timeToObstacle;
@@ -48,6 +49,12 @@ void Spawner::spawnNewGround(void) {
 		this->objectVect->push_back(grass);
 	}
 
+	if (rand() % 10 == 1) {
+		Obstacle* cloud = new Cloud(sf::Vector2f(xPos, this->unitSize * ((rand() % 3) + 0.5)), this->textures[4]);
+
+		this->objectVect->push_back(cloud);
+	}
+
 	this->timeToObstacle--;
 
 	if (*(this->currSpeed) < 5 * (*(this->currSpeed))) {
@@ -71,7 +78,7 @@ void Spawner::spawnStartingGround(void) {
 // 20% chance to adjust the height up or down
 void Spawner::adjustHeight(void) {
 	// This does not adjust the height on the same loop a hurdle is placed
-	if (this->timeToObstacle >= 2 && (rand() % 10) > 7) {
+	if (this->timeToObstacle > 2 && (rand() % 10) > 7) {
 		// The ++ and -- seem swapped, but this is because y = 0 is at the top of the screen
 		// So, increasing currHeight lowers the ground, and vice versa
 		if (this->currHeight == 5) {
@@ -108,5 +115,5 @@ void Spawner::chooseNextObstacle(bool& isAGap, const int xPos, const int yPos) {
 		}
 
 		// Between 2 and 5 generations, AKA 6-15 units
-		this->timeToObstacle = (rand() % 4) + 2;
+		this->timeToObstacle = (rand() % 4) + 3;
 }
