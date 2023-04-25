@@ -62,9 +62,6 @@ int main() {
     /// player animation test
     Animation playerAnim(sf::Vector2f(500, 404), 10);
 
-    /// player animation test
-    Animation player(sf::Vector2f(500, 404), 10);
-
     while (window.isOpen()) {
         touchingGround = false;
 
@@ -127,7 +124,6 @@ int main() {
         }
 
         // draw player
-        window.draw(player);
         window.draw(playerAnim);
 
         window.display();
