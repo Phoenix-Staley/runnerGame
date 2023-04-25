@@ -15,11 +15,11 @@ public:
 		this->setPosition(newPos);
 	};
 
-	bool jumpActive();
-	void updateMovement();
+	bool jumpActive(bool isTouchingGround);
+	void updateMovement(bool isTouchingGround);
 private:
 	double fallVelocity = 0;
 	const double jumpSpeed = -10;
 	clock_t jumpTime = NULL;
-	const int maxJumpTime = 1000;
+	const int maxJumpTime = 30;
 };

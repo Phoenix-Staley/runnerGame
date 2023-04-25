@@ -1,11 +1,4 @@
 ﻿  Player.cpp
-C:\Users\gilre\Documents\Computer Science\122\runnerGame\Pong4\Pong4\Pong\Player.cpp(23,17): warning C4244: 'argument': conversion from 'const double' to 'float', possible loss of data
-C:\Users\gilre\Documents\Computer Science\122\runnerGame\Pong4\Pong4\Pong\Player.cpp(29,17): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  main.cpp
-C:\Users\gilre\Documents\Computer Science\122\runnerGame\Pong4\Pong4\Pong\Obstacle.hpp(18,21): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-  Generating Code...
+C:\Users\gilre\Documents\Computer Science\122\runnerGame\Pong4\Pong4\Pong\Player.cpp(19,17): warning C4244: 'argument': conversion from 'const double' to 'float', possible loss of data
+C:\Users\gilre\Documents\Computer Science\122\runnerGame\Pong4\Pong4\Pong\Player.cpp(29,18): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   Pong.vcxproj -> C:\Users\gilre\Documents\Computer Science\122\runnerGame\Pong4\Pong4\Debug\Pong.exe

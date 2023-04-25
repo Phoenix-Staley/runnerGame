@@ -11,6 +11,7 @@ int main()
 {
 	// the speed at which obstacles should move
 	float curSpeed = 1;
+	bool touchingGround = false;
 
 	// self explanatory
 	sf::RenderWindow window(sf::VideoMode(1000, 1000), "runner game");
@@ -35,6 +36,8 @@ int main()
 
 	while (window.isOpen())
 	{
+		touchingGround = false;
+
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
@@ -52,8 +55,16 @@ int main()
 			i->move(-i->getSpeed(), 0);
 		}
 
+		// check if player collides with any obstacle
+		for (auto i : obVect) {
+			if (player.getGlobalBounds().intersects(i->getGlobalBounds()))
+			{
+				touchingGround = true;
+			}
+		}
+
 		// update player location
-		player.updateMovement();
+		player.updateMovement(touchingGround);
 
 		window.clear();
 
