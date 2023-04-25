@@ -21,9 +21,10 @@ class Spawner {
 		void spawnStartingGround(void);
 
 	protected:
-		int currHeight;
+		int currHeight; // 0-10 with 0 being the top of the screen
 		int timeToObstacle;
 		int unitSize;
+		double speedIncrease; // This is only changed once, so the speed doesn't grow exponentially
 		double* currSpeed;
 		sf::Texture* textures; // [ ground, tall obstacle, short obstacle, grass ]
 		std::vector<Obstacle*>* objectVect;

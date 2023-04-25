@@ -4,6 +4,7 @@
 
 Spawner::Spawner(int currHeight, int timeToObstacle, const int unitSize, sf::Texture* textures, std::vector<Obstacle*>* objectVect, double *currSpeed) {
 	this->currSpeed = currSpeed;
+	this->speedIncrease = *currSpeed / 30;
 	this->objectVect = objectVect;
 	this->currHeight = currHeight;
 	this->timeToObstacle = timeToObstacle;
