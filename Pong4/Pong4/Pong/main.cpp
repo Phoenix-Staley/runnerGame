@@ -3,6 +3,7 @@
 #include<iostream>
 
 #include "Obstacle.hpp"
+#include "Player.hpp"
 #include "Hurdle.hpp"
 #include "Animation.hpp"
 #include "Grass.hpp"
@@ -35,6 +36,7 @@ int main()
 
 	// the speed at which obstacles should move
 	float curSpeed = 1;
+	bool touchingGround = false;
 
 	// self explanatory
 	sf::RenderWindow window(sf::VideoMode(1000, 1000), "runner game");
@@ -48,6 +50,9 @@ int main()
 	Obstacle o2(1, sf::Vector2f(596 - (96 * 2), 600), blockTexture);
 	Obstacle o3(1, sf::Vector2f(692 - (96 * 2), 700), blockTexture);
 
+	// Player object
+	Player player(sf::Vector2f(90, 95), sf::Vector2f(500, 200));
+
 	// push_back is the same as inserting, the insert() function doens't work like you'd think
 	obVect.push_back(&o1);
 	obVect.push_back(&o2);
@@ -58,11 +63,12 @@ int main()
 
 
 	/// player animation test
-	Animation player(sf::Vector2f(500, 404), 10);
+	Animation playerAnim(sf::Vector2f(500, 404), 10);
 
 
 	while (window.isOpen())
 	{
+		touchingGround = false;
 		generationCounter--;
 		if (generationCounter == 0) {
 			generationCounter = UNITSIZE * 3; // 3 is the amount of blocks
@@ -99,9 +105,22 @@ int main()
 			i->move(-i->getSpeed(), 0);
 		}
 
+		// check if player collides with any obstacle
+		for (auto i : obVect) {
+			if (player.getGlobalBounds().intersects(i->getGlobalBounds()))
+			{
+				touchingGround = true;
+			}
+		}
+
+		// update player location
+		player.updateMovement(touchingGround);
+
+		playerAnim.setPosition(player.getPosition());
+
 
 		/// update animation fram
-		player.frameUpdate();
+		playerAnim.frameUpdate();
 
 		// clear the window before drawing shit
 		window.clear();
@@ -113,7 +132,9 @@ int main()
 			window.draw(*i);
 		}
 
+		// draw player
 		window.draw(player);
+		window.draw(playerAnim);
 
 		window.display();
 	}
