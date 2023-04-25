@@ -23,7 +23,7 @@ void Spawner::cleanOutObstacles(void) {
 
 void Spawner::spawnNewGround(void) {
 	// Do not generate anything when the game ends
-	if (*(this->currSpeed) = 0) { return; }
+	if (*(this->currSpeed) == 0) { return; }
 
 	// Spawns the ground to the right of the screen
 	const int xPos = 1000 + this->unitSize;
