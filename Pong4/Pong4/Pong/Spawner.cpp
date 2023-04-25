@@ -59,7 +59,7 @@ void Spawner::spawnNewGround(void) {
 	if (!isGap) {
 		// yPos - 1 ensures the grass is always above the ground
 		// this way, the player only collides with the grass
-		Obstacle* ground = new Obstacle(3, sf::Vector2f(xPos, yPos + 1), this->textures[0]);
+		Obstacle* ground = new Obstacle(3, sf::Vector2f(xPos, yPos + 12), this->textures[0]);
 		Obstacle* grass = new Grass(3, sf::Vector2f(xPos, yPos), this->textures[3]);
 
 		this->objectVect->push_back(ground);
@@ -67,7 +67,7 @@ void Spawner::spawnNewGround(void) {
 	}
 
 	this->timeToObstacle--;
-	*(this->currSpeed) *= 1.01;
+	*(this->currSpeed) *= 1.02;
 }
 
 void Spawner::spawnStartingGround(void) {

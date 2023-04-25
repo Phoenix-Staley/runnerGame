@@ -21,5 +21,5 @@ private:
 	double fallVelocity = 0;
 	const double jumpSpeed = -10;
 	clock_t jumpTime = NULL;
-	const int maxJumpTime = 30;
+	const int maxJumpTime = 20;
 };

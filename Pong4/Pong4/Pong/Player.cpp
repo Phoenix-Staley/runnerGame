@@ -7,7 +7,6 @@ bool Player::jumpActive(bool isTouchingGround)
 	{
 		return false;
 	}
-	//std::cout << jumpTime << std::endl; // debugging
 	return true;
 }
 
@@ -27,6 +26,10 @@ void Player::updateMovement(bool isTouchingGround)
 			jumpTime = maxJumpTime + 1;
 			fallVelocity += 0.25;
 			this->move(0, fallVelocity);
+			if (fallVelocity > 10) // max fall velocity such that player does not clip through the grass
+			{
+				fallVelocity = 10;
+			}
 		}
 		else // reset fall velocity and jumpTime tracking once player is on the ground again
 		{
