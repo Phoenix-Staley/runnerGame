@@ -41,7 +41,7 @@ void Spawner::spawnNewGround(void) {
 	if (!isAGap) {
 		// yPos + 1 ensures the grass is always above the ground
 		// this way, the player only collides with the grass
-		Obstacle* ground = new Obstacle(3, sf::Vector2f(xPos, yPos + 1), this->textures[0]);
+		Obstacle* ground = new Obstacle(3, sf::Vector2f(xPos, yPos + 10), this->textures[0]);
 		Obstacle* grass = new Grass(3, sf::Vector2f(xPos, yPos), this->textures[3]);
 
 		this->objectVect->push_back(ground);
@@ -49,7 +49,10 @@ void Spawner::spawnNewGround(void) {
 	}
 
 	this->timeToObstacle--;
-	*(this->currSpeed) += this->speedIncrease;
+
+	if (*(this->currSpeed) < 5 * (*(this->currSpeed))) {
+		*(this->currSpeed) += this->speedIncrease;
+	}
 }
 
 // Spawn the initial ground, before hurdles start spawning
@@ -57,7 +60,7 @@ void Spawner::spawnStartingGround(void) {
 	const int yPos = this->unitSize * this->currHeight;
 
 	for (int xPos = 0; xPos < 1000; xPos += (unitSize * 3)) {
-		Obstacle* groundTile = new Obstacle(3, sf::Vector2f(xPos, yPos + 1), this->textures[0]);
+		Obstacle* groundTile = new Obstacle(3, sf::Vector2f(xPos, yPos + 10), this->textures[0]);
 		Obstacle* grassTile = new Grass(3, sf::Vector2f(xPos, yPos), this->textures[3]);
 
 		this->objectVect->push_back(groundTile);

@@ -1,3 +1,9 @@
+/*
+Martin Hundrup, Gil Rezin, Phoenix Staley
+CptS 122
+4/26/23
+Side-scrolling runner game in which the player must dodge obstacles and pits to survive. Press space to jump
+*/
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
@@ -13,8 +19,19 @@ using std::vector;
 
 int main() {
     int UNITSIZE = 96;
+    bool gameOver = false;
+    int score = 0;
 
     srand(time(NULL));
+
+    // load the score counter
+    sf::Font font;
+    font.loadFromFile("8-bit-hud.ttf");
+    sf::Text scoreText;
+    scoreText.setFont(font);
+    scoreText.setFillColor(sf::Color::White);
+    scoreText.setPosition(760, 20);
+    scoreText.setCharacterSize(36);
 
     sf::Texture textures[4];
 
@@ -28,7 +45,7 @@ int main() {
     treeTexture.loadFromFile("testTree.png");
     // treeTexture.setRepeated(true);
     // the speed at which obstacles should move
-    float curSpeed = 1;
+    double currSpeed = 4;
     bool touchingGround = false;
 
     // shrub texture
@@ -40,14 +57,11 @@ int main() {
     grassTexture.loadFromFile("testGrass.png");
     grassTexture.setRepeated(true);
 
-    // the speed at which obstacles should move
-    double currSpeed = 2.5;
-
     // self explanatory
-    sf::RenderWindow window(sf::VideoMode(1000, 1000), "runner game");
+    sf::RenderWindow window(sf::VideoMode(1000, 1000), "runner game", sf::Style::Close);
     window.setFramerateLimit(100);
     // Player object
-    Player player(sf::Vector2f(90, 95), sf::Vector2f(500, 200));
+    Player player(sf::Vector2f(90, 95), sf::Vector2f(50, 200));
 
     // creates the collection of obstacles
     // we need to have pointers, copies don't work I tried
@@ -89,9 +103,6 @@ int main() {
             i->move(-i->getSpeed(), 0);
         }
 
-        // update animation frame
-        playerAnim.frameUpdate();
-
         // clear the window before drawing stuff
         window.clear();
 
@@ -105,25 +116,37 @@ int main() {
             if (player.getGlobalBounds().intersects(i->getGlobalBounds())) {
                 touchingGround = true;
             }
+            //std::cout << "0: " << textures[0].getNativeHandle() << "\t1: " << textures[1].getNativeHandle() << "\t2: " << textures[2].getNativeHandle() << std::endl;
+            // if touching the dirt, or any obstacles past score of 300 (invincibility window), end game
+            if (player.getGlobalBounds().intersects(i->getGlobalBounds()) && score > 300 && (i->getTexture()->getNativeHandle() == textures[0].getNativeHandle() || i->getTexture()->getNativeHandle() == textures[1].getNativeHandle() || i->getTexture()->getNativeHandle() == textures[2].getNativeHandle()))
+            {
+                currSpeed = 0;
+                gameOver = true;
+            }
         }
 
-        // update player location
-        player.updateMovement(touchingGround);
+        // update various items that should stop when the player dies
+        if (!gameOver)
+        {
+            player.updateMovement(touchingGround);
+            playerAnim.frameUpdate();
+            score++;
+            scoreText.setString(std::to_string(score));
+        }
 
         playerAnim.setPosition(player.getPosition());
-
-        // update animation fram
-        playerAnim.frameUpdate();
 
         generationCounter--;
 
         // draw each obstacle
         for (auto i : obVect) {
-            window.draw(*i);
+            window.draw(*i); 
         }
 
         // draw player
+        //window.draw(player);
         window.draw(playerAnim);
+        window.draw(scoreText);
 
         window.display();
     }
