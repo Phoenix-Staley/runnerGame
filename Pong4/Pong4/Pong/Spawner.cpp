@@ -2,38 +2,82 @@
 
 #include "Spawner.hpp"
 
-void cleanOutVector(std::vector<Obstacle*>& objectVect, const int unitSize) {
-	for (auto& i : objectVect) {
-		if (i->getPosition().x < -unitSize) {
-			objectVect.erase(std::remove(objectVect.begin(), objectVect.end(), i));
+Spawner::Spawner(int currHeight, int timeToObstacle, const int unitSize, sf::Texture* textures, std::vector<Obstacle*>* objectVect, double *currSpeed) {
+	this->currSpeed = currSpeed;
+	this->objectVect = objectVect;
+	this->currHeight = currHeight;
+	this->timeToObstacle = timeToObstacle;
+	this->unitSize = unitSize;
+	this->textures = textures;
+}
+
+void Spawner::cleanOutObstacles(void) {
+	for (auto& i : *(this->objectVect)) {
+		if (i->getPosition().x < -(this->unitSize * 2)) {
+			this->objectVect->erase(std::remove(this->objectVect->begin(), this->objectVect->end(), i));
 		}
 	}
 }
 
-void spawnNewGround(int& generation, std::vector<Obstacle*> &objectVect, sf::Texture textures[3], const int unitSize) {
-	const int xPos = 1000 + unitSize;
-	const int yPos = unitSize * 5;
+void Spawner::spawnNewGround(void) {
+	const int xPos = 1000 + this->unitSize;
+	const int yPos = this->unitSize * this->currHeight;
+	bool isGap = false;
 
-	generation = unitSize * 3; // 3 is the amount of blocks
-	Obstacle* oT = new Obstacle(3, sf::Vector2f(xPos, yPos), textures[0]);
+	if (this->timeToObstacle != 1 && (rand() % 10) > 7) {
+		if (this->currHeight == 3) {
+			this->currHeight++;
+		}
+		else if (this->currHeight == 10) {
+			this->currHeight--;
+		}
+		else {
+			// Add -1, 0, or 1
+			this->currHeight += (rand() % 2) ? -1 : 1;
+		}
+	}
 
-	// polymorphism baby!
-	Obstacle* hT = new Hurdle(sf::Vector2f(xPos, yPos), textures[1]);
-	Obstacle* sT = new Hurdle(sf::Vector2f(xPos + 182, yPos), textures[2]);
+	if (this->timeToObstacle == 0) {
+		int obstacleType = rand() % 3;
 
-	objectVect.push_back(oT);
-	objectVect.push_back(sT);
-	objectVect.push_back(hT);
+		if (obstacleType == 2) {
+			Obstacle* highHurdle = new Hurdle(sf::Vector2f(xPos, yPos), this->textures[1]);
+			this->objectVect->push_back(highHurdle);
+		}
+		else if (obstacleType == 1) {
+			Obstacle* shortHurdle = new Hurdle(sf::Vector2f(xPos + 182, yPos), this->textures[2]);
+			this->objectVect->push_back(shortHurdle);
+		}
+		else {
+			isGap = true;
+		}
 
-	cleanOutVector(objectVect, unitSize);
+		// Between 2 and 5 generations, AKA 6-15 units
+		this->timeToObstacle = (rand() % 4) + 2;
+	}
+
+	if (!isGap) {
+		// yPos - 1 ensures the grass is always above the ground
+		// this way, the player only collides with the grass
+		Obstacle* ground = new Obstacle(3, sf::Vector2f(xPos, yPos - 1), this->textures[0]);
+		Obstacle* grass = new Grass(3, sf::Vector2f(xPos, yPos), this->textures[3]);
+
+		this->objectVect->push_back(ground);
+		this->objectVect->push_back(grass);
+	}
+
+	this->timeToObstacle--;
+	*(this->currSpeed) *= 1.01;
 }
 
-void spawnStartingGround(std::vector<Obstacle*>& objectVect, sf::Texture &groundTexture, const int unitSize) {
-	const int yPos = unitSize * 6;
+void Spawner::spawnStartingGround(void) {
+	const int yPos = this->unitSize * this->currHeight;
 
 	for (int xPos = 0; xPos < 1000; xPos += unitSize) {
-		Obstacle* groundTile = new Obstacle(3, sf::Vector2f(xPos, yPos), groundTexture);
+		Obstacle* groundTile = new Obstacle(3, sf::Vector2f(xPos, yPos), this->textures[0]);
+		Obstacle* grassTile = new Grass(3, sf::Vector2f(xPos, yPos), this->textures[3]);
 
-		objectVect.push_back(groundTile);
+		this->objectVect->push_back(groundTile);
+		this->objectVect->push_back(grassTile);
 	}
 }

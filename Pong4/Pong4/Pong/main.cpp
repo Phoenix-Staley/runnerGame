@@ -13,17 +13,14 @@ using std::vector;
 int main() {
     int UNITSIZE = 96;
 
-    sf::Texture textures[3];
+    srand(time(NULL));
+
+    sf::Texture textures[4];
 
     // dirt texture
     sf::Texture &blockTexture = textures[0];
     blockTexture.loadFromFile("testDirt.png");
     blockTexture.setRepeated(true);
-
-    /// grass texture
-    sf::Texture grassTexture;
-    grassTexture.loadFromFile("testGrass.png");
-    grassTexture.setRepeated(true);
 
     // tree texture
     sf::Texture &treeTexture = textures[1];
@@ -34,28 +31,39 @@ int main() {
     sf::Texture &shrubTexture = textures[2];
     shrubTexture.loadFromFile("testShrub.png");
 
+    // grass texture
+    sf::Texture &grassTexture = textures[3];
+    grassTexture.loadFromFile("testGrass.png");
+    grassTexture.setRepeated(true);
+
     // the speed at which obstacles should move
-    float curSpeed = 1;
+    double currSpeed = 2.5;
+    double originalSpeed = currSpeed;
 
     // self explanatory
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "runner game");
     window.setFramerateLimit(100);
 
     // creates the collection of obstacles
-    vector<Obstacle *>
-        obVect;  // we need to have pointers, copies don't work I tried
+    // we need to have pointers, copies don't work I tried
+    vector<Obstacle *> obVect;
 
     // 96 is pixels per unit/block
     int generationCounter = 0;
+    Spawner spawnerObj(9, 1, UNITSIZE, &textures[0], &obVect, &currSpeed);
 
-    spawnStartingGround(obVect, textures[0], UNITSIZE);
+    spawnerObj.spawnStartingGround();
 
     /// player animation test
     Animation player(sf::Vector2f(500, 404), 10);
 
     while (window.isOpen()) {
         if (generationCounter == 0) {
-            spawnNewGround(generationCounter, obVect, textures, UNITSIZE);
+            spawnerObj.cleanOutObstacles();
+            spawnerObj.spawnNewGround();
+
+            // 3 columns of blocks per generation
+            generationCounter = 3 * (UNITSIZE / currSpeed);
         }
 
         sf::Event event;
@@ -67,7 +75,7 @@ int main() {
 
         // set each obstacles speed
         for (auto i : obVect) {
-            i->setSpeed(curSpeed);
+            i->setSpeed(currSpeed);
         }
 
         // move each obstacle
@@ -75,10 +83,10 @@ int main() {
             i->move(-i->getSpeed(), 0);
         }
 
-        /// update animation fram
+        // update animation frame
         player.frameUpdate();
 
-        // clear the window before drawing shit
+        // clear the window before drawing stuff
         window.clear();
 
         // draw each obstacle
