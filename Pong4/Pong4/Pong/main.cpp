@@ -42,7 +42,6 @@ int main() {
 
     // the speed at which obstacles should move
     double currSpeed = 2.5;
-    double originalSpeed = currSpeed;
 
     // self explanatory
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "runner game");
@@ -59,7 +58,7 @@ int main() {
     Spawner spawnerObj(9, 1, UNITSIZE, &textures[0], &obVect, &currSpeed);
 
     spawnerObj.spawnStartingGround();
-    /// player animation test
+    // player animation test
     Animation playerAnim(sf::Vector2f(500, 404), 10);
 
     while (window.isOpen()) {
@@ -113,7 +112,7 @@ int main() {
 
         playerAnim.setPosition(player.getPosition());
 
-        /// update animation fram
+        // update animation fram
         playerAnim.frameUpdate();
 
         generationCounter--;
