@@ -151,6 +151,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="Spawner.cpp" />
+    <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.hpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="Obstacle.hpp" />
     <ClInclude Include="Paddle.hpp" />
     <ClInclude Include="Spawner.hpp" />
+    <ClInclude Include="Player.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="spriteTest.png" />

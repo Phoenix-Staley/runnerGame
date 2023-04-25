@@ -6,6 +6,7 @@
 #include "Grass.hpp"
 #include "Hurdle.hpp"
 #include "Obstacle.hpp"
+#include "Player.hpp"
 #include "Spawner.hpp"
 
 using std::vector;
@@ -26,6 +27,9 @@ int main() {
     sf::Texture &treeTexture = textures[1];
     treeTexture.loadFromFile("testTree.png");
     // treeTexture.setRepeated(true);
+    // the speed at which obstacles should move
+    float curSpeed = 1;
+    bool touchingGround = false;
 
     // shrub texture
     sf::Texture &shrubTexture = textures[2];
@@ -43,6 +47,8 @@ int main() {
     // self explanatory
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "runner game");
     window.setFramerateLimit(100);
+    // Player object
+    Player player(sf::Vector2f(90, 95), sf::Vector2f(500, 200));
 
     // creates the collection of obstacles
     // we need to have pointers, copies don't work I tried
@@ -53,11 +59,15 @@ int main() {
     Spawner spawnerObj(9, 1, UNITSIZE, &textures[0], &obVect, &currSpeed);
 
     spawnerObj.spawnStartingGround();
+    /// player animation test
+    Animation playerAnim(sf::Vector2f(500, 404), 10);
 
     /// player animation test
     Animation player(sf::Vector2f(500, 404), 10);
 
     while (window.isOpen()) {
+        touchingGround = false;
+
         if (generationCounter == 0) {
             spawnerObj.cleanOutObstacles();
             spawnerObj.spawnNewGround();
@@ -94,11 +104,33 @@ int main() {
             window.draw(*i);
         }
 
-        window.draw(player);
+        // check if player collides with any obstacle
+        for (auto i : obVect) {
+            if (player.getGlobalBounds().intersects(i->getGlobalBounds())) {
+                touchingGround = true;
+            }
+        }
 
-        window.display();
+        // update player location
+        player.updateMovement(touchingGround);
+
+        playerAnim.setPosition(player.getPosition());
+
+        /// update animation fram
+        playerAnim.frameUpdate();
 
         generationCounter--;
+
+        // draw each obstacle
+        for (auto i : obVect) {
+            window.draw(*i);
+        }
+
+        // draw player
+        window.draw(player);
+        window.draw(playerAnim);
+
+        window.display();
     }
 
     return 0;
