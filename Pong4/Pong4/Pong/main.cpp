@@ -43,7 +43,8 @@ int main() {
 
     // tree texture
     sf::Texture &treeTexture = textures[1];
-    treeTexture.loadFromFile("testTree.png");
+    //treeTexture.loadFromFile("testTree.png");
+    treeTexture.loadFromFile("tree.png");
     // treeTexture.setRepeated(true);
     // the speed at which obstacles should move
     double currSpeed = 4;
@@ -51,7 +52,8 @@ int main() {
 
     // shrub texture
     sf::Texture &shrubTexture = textures[2];
-    shrubTexture.loadFromFile("testShrub.png");
+    //shrubTexture.loadFromFile("testShrub.png");
+    shrubTexture.loadFromFile("bush.png");
 
     // grass texture
     sf::Texture &grassTexture = textures[3];
