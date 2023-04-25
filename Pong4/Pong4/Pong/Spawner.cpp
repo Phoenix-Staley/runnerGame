@@ -49,7 +49,10 @@ void Spawner::spawnNewGround(void) {
 	}
 
 	this->timeToObstacle--;
-	*(this->currSpeed) += this->speedIncrease;
+
+	if (*(this->currSpeed) < 5 * (*(this->currSpeed))) {
+		*(this->currSpeed) += this->speedIncrease;
+	}
 }
 
 // Spawn the initial ground, before hurdles start spawning
