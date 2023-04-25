@@ -71,7 +71,7 @@ void Spawner::spawnStartingGround(void) {
 // 20% chance to adjust the height up or down
 void Spawner::adjustHeight(void) {
 	// This does not adjust the height on the same loop a hurdle is placed
-	if (this->timeToObstacle != 1 && (rand() % 10) > 7) {
+	if (this->timeToObstacle >= 2 && (rand() % 10) > 7) {
 		// The ++ and -- seem swapped, but this is because y = 0 is at the top of the screen
 		// So, increasing currHeight lowers the ground, and vice versa
 		if (this->currHeight == 5) {
