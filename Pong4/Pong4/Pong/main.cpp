@@ -154,7 +154,7 @@ int main() {
         if (!gameOver)
         {
             player.updateMovement(touchingGround);
-            playerAnim.frameUpdate();
+            playerAnim.frameUpdate(player.getVelocity());
             score++;
             scoreText.setString(std::to_string(score));
         }

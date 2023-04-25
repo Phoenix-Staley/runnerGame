@@ -15,6 +15,7 @@ public:
 		this->setPosition(newPos);
 	};
 
+	double getVelocity(); 
 	bool jumpActive(bool isTouchingGround);
 	void updateMovement(bool isTouchingGround);
 private:
