@@ -1,3 +1,6 @@
 ﻿  main.cpp
+C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Pong\Obstacle.hpp(37,12): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Pong\Hurdle.hpp(19,16): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Pong\Cloud.hpp(23,20): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Pong\main.cpp(107,19): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   Pong.vcxproj -> C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Debug\Pong.exe

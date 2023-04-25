@@ -41,6 +41,9 @@
     <ClInclude Include="Grass.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Cloud.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="spriteTest.png">

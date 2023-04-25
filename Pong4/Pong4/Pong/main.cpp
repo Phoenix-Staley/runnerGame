@@ -6,6 +6,7 @@
 #include "Hurdle.hpp"
 #include "Animation.hpp"
 #include "Grass.hpp"
+#include "Cloud.hpp"
 
 using std::vector;
 
@@ -71,6 +72,7 @@ int main()
 			// polymorphism baby!
 			Obstacle* hT = new Hurdle(sf::Vector2f(700, 500), treeTexture);
 			Obstacle* sT = new Hurdle(sf::Vector2f(882, 500), shrubTexture);
+			Obstacle* cT = new Cloud(sf::Vector2f(882, 100), shrubTexture);
 
 			// grass
 			Obstacle* gT = new Grass(3, sf::Vector2f(700, 500), grassTexture);
@@ -79,6 +81,7 @@ int main()
 			obVect.push_back(sT);
 			obVect.push_back(hT);
 			obVect.push_back(gT);
+			obVect.push_back(cT);
 		}
 
 
@@ -89,14 +92,19 @@ int main()
 				window.close();
 		}
 
-		// set each obstacles speed
-		for (auto i : obVect) {
-			i->setSpeed(curSpeed);
-		}
+		//// set each obstacles speed
+		//for (auto i : obVect) {
+		//	i->setSpeed(curSpeed);
+		//}
 
-		// move each obstacle
+		//// move each obstacle
+		//for (auto i : obVect) {
+		//	i->move(-i->getSpeed(), 0);
+		//}
+
+		// update each obstacle
 		for (auto i : obVect) {
-			i->move(-i->getSpeed(), 0);
+			i->frameUpdate(curSpeed);
 		}
 
 
