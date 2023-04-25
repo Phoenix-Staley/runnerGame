@@ -20,6 +20,10 @@ class Spawner {
 
 		void spawnStartingGround(void);
 
+		void adjustHeight(void);
+
+		void chooseNextObstacle(bool& isAGap, const int xPos, const int yPos);
+
 	protected:
 		int currHeight; // 0-10 with 0 being the top of the screen
 		int timeToObstacle;
