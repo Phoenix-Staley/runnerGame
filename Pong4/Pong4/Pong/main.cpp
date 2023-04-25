@@ -76,7 +76,7 @@ int main() {
     Spawner spawnerObj(9, 1, UNITSIZE, &textures[0], &obVect, &currSpeed);
 
     spawnerObj.spawnStartingGround();
-    /// player animation test
+    // player animation test
     Animation playerAnim(sf::Vector2f(500, 404), 10);
 
     while (window.isOpen()) {
