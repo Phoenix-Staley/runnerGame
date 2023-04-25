@@ -94,7 +94,7 @@ int main() {
         }
 
         // update animation frame
-        player.frameUpdate();
+        playerAnim.frameUpdate();
 
         // clear the window before drawing stuff
         window.clear();
