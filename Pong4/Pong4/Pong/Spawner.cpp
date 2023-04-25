@@ -15,7 +15,7 @@ Spawner::Spawner(int currHeight, int timeToObstacle, const int unitSize, sf::Tex
 void Spawner::cleanOutObstacles(void) {
 	for (auto& i : *(this->objectVect)) {
 		// If any given object is off the screen, remove it from the object vector
-		if (i->getPosition().x < -(this->unitSize * 2)) {
+		if (i->getPosition().x < -(this->unitSize * 3)) {
 			this->objectVect->erase(std::remove(this->objectVect->begin(), this->objectVect->end(), i));
 		}
 	}
