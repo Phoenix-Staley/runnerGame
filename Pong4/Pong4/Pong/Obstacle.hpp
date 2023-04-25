@@ -16,6 +16,8 @@ public:
 		speed = 0;
 	}
 
+	~Obstacle() {}
+
 	// constructor
 	Obstacle(int width, const sf::Vector2f& nPos, sf::Texture & nText) {
 

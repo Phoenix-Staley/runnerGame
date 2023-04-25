@@ -1,130 +1,156 @@
-#include<SFML/Graphics.hpp>
-#include<vector>
-#include<iostream>
+/*
+Martin Hundrup, Gil Rezin, Phoenix Staley
+CptS 122
+4/26/23
+Side-scrolling runner game in which the player must dodge obstacles and pits to survive. Press space to jump
+*/
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <vector>
 
-#include "Obstacle.hpp"
-#include "Hurdle.hpp"
 #include "Animation.hpp"
 #include "Grass.hpp"
 #include "Cloud.hpp"
+#include "Hurdle.hpp"
+#include "Obstacle.hpp"
+#include "Player.hpp"
+#include "Spawner.hpp"
 
 using std::vector;
 
-int main()
-{
-	// pixels per unit
-	int UNITSIZE = 96;
+int main() {
+    int UNITSIZE = 96;
+    bool gameOver = false;
+    int score = 0;
 
-	/// dirt texture
-	sf::Texture blockTexture;	
-	blockTexture.loadFromFile("testDirt.png");
-	blockTexture.setRepeated(true);
+    srand(time(NULL));
 
-	/// grass texture
-	sf::Texture grassTexture;
-	grassTexture.loadFromFile("testGrass.png");
-	grassTexture.setRepeated(true);
-	
-	/// tree texture
-	sf::Texture treeTexture;	
-	treeTexture.loadFromFile("testTree.png");
-	//treeTexture.setRepeated(true);
+    // load the score counter
+    sf::Font font;
+    font.loadFromFile("8-bit-hud.ttf");
+    sf::Text scoreText;
+    scoreText.setFont(font);
+    scoreText.setFillColor(sf::Color::White);
+    scoreText.setPosition(760, 20);
+    scoreText.setCharacterSize(36);
 
-	/// shrub texture
-	sf::Texture shrubTexture;
-	shrubTexture.loadFromFile("testShrub.png");
+    sf::Texture textures[4];
 
-	// the speed at which obstacles should move
-	float curSpeed = 1;
+    // dirt texture
+    sf::Texture &blockTexture = textures[0];
+    blockTexture.loadFromFile("testDirt.png");
+    blockTexture.setRepeated(true);
 
-	// self explanatory
-	sf::RenderWindow window(sf::VideoMode(1000, 1000), "runner game");
-	window.setFramerateLimit(100);
+    // tree texture
+    sf::Texture &treeTexture = textures[1];
+    treeTexture.loadFromFile("testTree.png");
+    // treeTexture.setRepeated(true);
+    // the speed at which obstacles should move
+    double currSpeed = 4;
+    bool touchingGround = false;
 
-	// creates the collection of obstacles
-	vector<Obstacle*> obVect; // we need to have pointers, copies don't work I tried
+    // shrub texture
+    sf::Texture &shrubTexture = textures[2];
+    shrubTexture.loadFromFile("testShrub.png");
 
-	// objects for testing
-	Obstacle o1(1, sf::Vector2f(500-(96*2), 500), blockTexture);
-	Obstacle o2(1, sf::Vector2f(596 - (96 * 2), 600), blockTexture);
-	Obstacle o3(1, sf::Vector2f(692 - (96 * 2), 700), blockTexture);
+    // grass texture
+    sf::Texture &grassTexture = textures[3];
+    grassTexture.loadFromFile("testGrass.png");
+    grassTexture.setRepeated(true);
 
-	// push_back is the same as inserting, the insert() function doens't work like you'd think
-	obVect.push_back(&o1);
-	obVect.push_back(&o2);
-	obVect.push_back(&o3);
+    // self explanatory
+    sf::RenderWindow window(sf::VideoMode(1000, 1000), "runner game", sf::Style::Close);
+    window.setFramerateLimit(100);
+    // Player object
+    Player player(sf::Vector2f(90, 95), sf::Vector2f(50, 200));
 
-	// 96 is pixels per unit/block
-	int generationCounter = UNITSIZE * 3;
+    // creates the collection of obstacles
+    // we need to have pointers, copies don't work I tried
+    vector<Obstacle *> obVect;
 
+    // 96 is pixels per unit/block
+    int generationCounter = 0;
+    Spawner spawnerObj(9, 1, UNITSIZE, &textures[0], &obVect, &currSpeed);
 
-	/// player animation test
-	Animation player(sf::Vector2f(500, 404), 10);
+    spawnerObj.spawnStartingGround();
+    // player animation test
+    Animation playerAnim(sf::Vector2f(500, 404), 10);
 
+    while (window.isOpen()) {
+        touchingGround = false;
 
-	while (window.isOpen())
-	{
-		generationCounter--;
-		if (generationCounter == 0) {
-			generationCounter = UNITSIZE * 3; // 3 is the amount of blocks
-			Obstacle* oT = new Obstacle(3, sf::Vector2f(700, 500), blockTexture);
+        if (generationCounter == 0) {
+            spawnerObj.cleanOutObstacles();
+            spawnerObj.spawnNewGround();
 
-			// polymorphism baby!
-			Obstacle* hT = new Hurdle(sf::Vector2f(700, 500), treeTexture);
-			Obstacle* sT = new Hurdle(sf::Vector2f(882, 500), shrubTexture);
-			Obstacle* cT = new Cloud(sf::Vector2f(882, 100), shrubTexture);
+            // 3 columns of blocks per generation
+            generationCounter = 3 * (UNITSIZE / currSpeed);
+        }
 
-			// grass
-			Obstacle* gT = new Grass(3, sf::Vector2f(700, 500), grassTexture);
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
+        }
 
-			obVect.push_back(oT);
-			obVect.push_back(sT);
-			obVect.push_back(hT);
-			obVect.push_back(gT);
-			obVect.push_back(cT);
-		}
+        // set each obstacles speed
+        for (auto i : obVect) {
+            i->setSpeed(currSpeed);
+        }
 
+        // move each obstacle
+        for (auto i : obVect) {
+            i->move(-i->getSpeed(), 0);
+        }
 
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-				window.close();
-		}
+        // clear the window before drawing stuff
+        window.clear();
 
-		//// set each obstacles speed
-		//for (auto i : obVect) {
-		//	i->setSpeed(curSpeed);
-		//}
+        // draw each obstacle
+        for (auto i : obVect) {
+            window.draw(*i);
+        }
 
-		//// move each obstacle
-		//for (auto i : obVect) {
-		//	i->move(-i->getSpeed(), 0);
-		//}
+        // check if player collides with any obstacle
+        for (auto i : obVect) {
+            if (player.getGlobalBounds().intersects(i->getGlobalBounds())) {
+                touchingGround = true;
+            }
+            //std::cout << "0: " << textures[0].getNativeHandle() << "\t1: " << textures[1].getNativeHandle() << "\t2: " << textures[2].getNativeHandle() << std::endl;
+            // if touching the dirt, or any obstacles past score of 300 (invincibility window), end game
+            if (player.getGlobalBounds().intersects(i->getGlobalBounds()) && score > 300 && (i->getTexture()->getNativeHandle() == textures[0].getNativeHandle() || i->getTexture()->getNativeHandle() == textures[1].getNativeHandle() || i->getTexture()->getNativeHandle() == textures[2].getNativeHandle()))
+            {
+                currSpeed = 0;
+                gameOver = true;
+            }
+        }
 
-		// update each obstacle
-		for (auto i : obVect) {
-			i->frameUpdate(curSpeed);
-		}
+        // update various items that should stop when the player dies
+        if (!gameOver)
+        {
+            player.updateMovement(touchingGround);
+            playerAnim.frameUpdate();
+            score++;
+            scoreText.setString(std::to_string(score));
+        }
 
+        playerAnim.setPosition(player.getPosition());
 
-		/// update animation fram
-		player.frameUpdate();
+        generationCounter--;
 
-		// clear the window before drawing shit
-		window.clear();
+        // draw each obstacle
+        for (auto i : obVect) {
+            window.draw(*i); 
+        }
 
-		
+        // draw player
+        //window.draw(player);
+        window.draw(playerAnim);
+        window.draw(scoreText);
 
-		// draw each obstacle
-		for (auto i : obVect) {
-			window.draw(*i);
-		}
+        window.display();
+    }
 
-		window.draw(player);
-
-		window.display();
-	}
-
-	return 0;
+    return 0;
 }
