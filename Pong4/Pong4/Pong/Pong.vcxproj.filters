@@ -21,6 +21,7 @@
     <ClCompile Include="Obstacle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Spawner.cpp">
     <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -41,6 +42,7 @@
     <ClInclude Include="Hurdle.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Spawner.hpp">
     <ClInclude Include="Animation.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>

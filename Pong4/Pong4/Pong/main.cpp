@@ -1,143 +1,133 @@
-#include<SFML/Graphics.hpp>
-#include<vector>
-#include<iostream>
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <vector>
 
-#include "Obstacle.hpp"
-#include "Player.hpp"
-#include "Hurdle.hpp"
 #include "Animation.hpp"
 #include "Grass.hpp"
+#include "Hurdle.hpp"
+#include "Obstacle.hpp"
+#include "Player.hpp"
+#include "Spawner.hpp"
 
 using std::vector;
 
-int main()
-{
-	// pixels per unit
-	int UNITSIZE = 96;
+int main() {
+    int UNITSIZE = 96;
 
-	/// dirt texture
-	sf::Texture blockTexture;	
-	blockTexture.loadFromFile("testDirt.png");
-	blockTexture.setRepeated(true);
+    srand(time(NULL));
 
-	/// grass texture
-	sf::Texture grassTexture;
-	grassTexture.loadFromFile("testGrass.png");
-	grassTexture.setRepeated(true);
-	
-	/// tree texture
-	sf::Texture treeTexture;	
-	treeTexture.loadFromFile("testTree.png");
-	//treeTexture.setRepeated(true);
+    sf::Texture textures[4];
 
-	/// shrub texture
-	sf::Texture shrubTexture;
-	shrubTexture.loadFromFile("testShrub.png");
+    // dirt texture
+    sf::Texture &blockTexture = textures[0];
+    blockTexture.loadFromFile("testDirt.png");
+    blockTexture.setRepeated(true);
 
-	// the speed at which obstacles should move
-	float curSpeed = 1;
-	bool touchingGround = false;
+    // tree texture
+    sf::Texture &treeTexture = textures[1];
+    treeTexture.loadFromFile("testTree.png");
+    // treeTexture.setRepeated(true);
+    // the speed at which obstacles should move
+    float curSpeed = 1;
+    bool touchingGround = false;
 
-	// self explanatory
-	sf::RenderWindow window(sf::VideoMode(1000, 1000), "runner game");
-	window.setFramerateLimit(100);
+    // shrub texture
+    sf::Texture &shrubTexture = textures[2];
+    shrubTexture.loadFromFile("testShrub.png");
 
-	// creates the collection of obstacles
-	vector<Obstacle*> obVect; // we need to have pointers, copies don't work I tried
+    // grass texture
+    sf::Texture &grassTexture = textures[3];
+    grassTexture.loadFromFile("testGrass.png");
+    grassTexture.setRepeated(true);
 
-	// objects for testing
-	Obstacle o1(1, sf::Vector2f(500-(96*2), 500), blockTexture);
-	Obstacle o2(1, sf::Vector2f(596 - (96 * 2), 600), blockTexture);
-	Obstacle o3(1, sf::Vector2f(692 - (96 * 2), 700), blockTexture);
+    // the speed at which obstacles should move
+    double currSpeed = 2.5;
+    double originalSpeed = currSpeed;
 
-	// Player object
-	Player player(sf::Vector2f(90, 95), sf::Vector2f(500, 200));
+    // self explanatory
+    sf::RenderWindow window(sf::VideoMode(1000, 1000), "runner game");
+    window.setFramerateLimit(100);
+    // Player object
+    Player player(sf::Vector2f(90, 95), sf::Vector2f(500, 200));
 
-	// push_back is the same as inserting, the insert() function doens't work like you'd think
-	obVect.push_back(&o1);
-	obVect.push_back(&o2);
-	obVect.push_back(&o3);
+    // creates the collection of obstacles
+    // we need to have pointers, copies don't work I tried
+    vector<Obstacle *> obVect;
 
-	// 96 is pixels per unit/block
-	int generationCounter = UNITSIZE * 3;
+    // 96 is pixels per unit/block
+    int generationCounter = 0;
+    Spawner spawnerObj(9, 1, UNITSIZE, &textures[0], &obVect, &currSpeed);
 
+    spawnerObj.spawnStartingGround();
+    /// player animation test
+    Animation playerAnim(sf::Vector2f(500, 404), 10);
 
-	/// player animation test
-	Animation playerAnim(sf::Vector2f(500, 404), 10);
+    while (window.isOpen()) {
+        touchingGround = false;
 
+        if (generationCounter == 0) {
+            spawnerObj.cleanOutObstacles();
+            spawnerObj.spawnNewGround();
 
-	while (window.isOpen())
-	{
-		touchingGround = false;
-		generationCounter--;
-		if (generationCounter == 0) {
-			generationCounter = UNITSIZE * 3; // 3 is the amount of blocks
-			Obstacle* oT = new Obstacle(3, sf::Vector2f(700, 500), blockTexture);
+            // 3 columns of blocks per generation
+            generationCounter = 3 * (UNITSIZE / currSpeed);
+        }
 
-			// polymorphism baby!
-			Obstacle* hT = new Hurdle(sf::Vector2f(700, 500), treeTexture);
-			Obstacle* sT = new Hurdle(sf::Vector2f(882, 500), shrubTexture);
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
+        }
 
-			// grass
-			Obstacle* gT = new Grass(3, sf::Vector2f(700, 500), grassTexture);
+        // set each obstacles speed
+        for (auto i : obVect) {
+            i->setSpeed(currSpeed);
+        }
 
-			obVect.push_back(oT);
-			obVect.push_back(sT);
-			obVect.push_back(hT);
-			obVect.push_back(gT);
-		}
+        // move each obstacle
+        for (auto i : obVect) {
+            i->move(-i->getSpeed(), 0);
+        }
 
+        // update animation frame
+        playerAnim.frameUpdate();
 
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-				window.close();
-		}
+        // clear the window before drawing stuff
+        window.clear();
 
-		// set each obstacles speed
-		for (auto i : obVect) {
-			i->setSpeed(curSpeed);
-		}
+        // draw each obstacle
+        for (auto i : obVect) {
+            window.draw(*i);
+        }
 
-		// move each obstacle
-		for (auto i : obVect) {
-			i->move(-i->getSpeed(), 0);
-		}
+        // check if player collides with any obstacle
+        for (auto i : obVect) {
+            if (player.getGlobalBounds().intersects(i->getGlobalBounds())) {
+                touchingGround = true;
+            }
+        }
 
-		// check if player collides with any obstacle
-		for (auto i : obVect) {
-			if (player.getGlobalBounds().intersects(i->getGlobalBounds()))
-			{
-				touchingGround = true;
-			}
-		}
+        // update player location
+        player.updateMovement(touchingGround);
 
-		// update player location
-		player.updateMovement(touchingGround);
+        playerAnim.setPosition(player.getPosition());
 
-		playerAnim.setPosition(player.getPosition());
+        /// update animation fram
+        playerAnim.frameUpdate();
 
+        generationCounter--;
 
-		/// update animation fram
-		playerAnim.frameUpdate();
+        // draw each obstacle
+        for (auto i : obVect) {
+            window.draw(*i);
+        }
 
-		// clear the window before drawing shit
-		window.clear();
+        // draw player
+        window.draw(playerAnim);
 
-		
+        window.display();
+    }
 
-		// draw each obstacle
-		for (auto i : obVect) {
-			window.draw(*i);
-		}
-
-		// draw player
-		window.draw(player);
-		window.draw(playerAnim);
-
-		window.display();
-	}
-
-	return 0;
+    return 0;
 }
