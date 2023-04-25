@@ -51,7 +51,7 @@ int main()
 	Obstacle o3(1, sf::Vector2f(692 - (96 * 2), 700), blockTexture);
 
 	// Player object
-	Player player(sf::Vector2f(100, 100), sf::Vector2f(500, 200));
+	Player player(sf::Vector2f(90, 95), sf::Vector2f(500, 200));
 
 	// push_back is the same as inserting, the insert() function doens't work like you'd think
 	obVect.push_back(&o1);
@@ -63,7 +63,7 @@ int main()
 
 
 	/// player animation test
-	Animation player(sf::Vector2f(500, 404), 10);
+	Animation playerAnim(sf::Vector2f(500, 404), 10);
 
 
 	while (window.isOpen())
@@ -116,9 +116,11 @@ int main()
 		// update player location
 		player.updateMovement(touchingGround);
 
+		playerAnim.setPosition(player.getPosition());
+
 
 		/// update animation fram
-		player.frameUpdate();
+		playerAnim.frameUpdate();
 
 		// clear the window before drawing shit
 		window.clear();
@@ -132,6 +134,7 @@ int main()
 
 		// draw player
 		window.draw(player);
+		window.draw(playerAnim);
 
 		window.display();
 	}
