@@ -5,6 +5,7 @@ CptS 122
 Side-scrolling runner game in which the player must dodge obstacles and pits to survive. Press space to jump
 */
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include <vector>
 
@@ -19,6 +20,15 @@ Side-scrolling runner game in which the player must dodge obstacles and pits to 
 using std::vector;
 
 int main() {
+
+    ///sound test
+    sf::SoundBuffer soundFile;
+    soundFile.loadFromFile("song.wav");
+
+    sf::Sound song;
+    song.setBuffer(soundFile);
+    song.setLoop(true);
+    song.play();
 
     int UNITSIZE = 96;
     bool gameOver = false;
