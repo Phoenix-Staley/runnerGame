@@ -21,15 +21,25 @@ using std::vector;
 
 int main() {
 
-    ///sound test
-    sf::SoundBuffer soundFile;
-    soundFile.loadFromFile("song.wav");
+    ///song file
+    sf::SoundBuffer songFile;
+    songFile.loadFromFile("song.wav");
 
+    ///death file
+    sf::SoundBuffer deathFile;
+    deathFile.loadFromFile("death.wav");
+
+    /// background song
     sf::Sound song;
-    song.setBuffer(soundFile);
+    song.setBuffer(songFile);
     song.setLoop(true);
     song.play();
 
+    /// death sound
+    sf::Sound deathSFX;
+    deathSFX.setBuffer(deathFile);
+    bool hasPlayedDeath = false;
+   
     int UNITSIZE = 96;
     bool gameOver = false;
     int score = 0;
@@ -172,10 +182,17 @@ int main() {
         }
         else { /// game over
             window.draw(restart);
+
+            if (!hasPlayedDeath) {
+                deathSFX.play();
+                hasPlayedDeath = true;
+            }
+
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
                 /// restart
                 gameOver = false;
                 
+                hasPlayedDeath = false;
                 obVect.clear();
                 title.setPosition(sf::Vector2f(500, 200));
 

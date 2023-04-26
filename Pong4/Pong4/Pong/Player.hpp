@@ -1,5 +1,6 @@
 #pragma once
 #include "SFML/Graphics.hpp"
+#include "SFML/Audio.hpp"
 #include <iostream>
 #include <ctime>
 
@@ -11,6 +12,9 @@ public:
 		this->setFillColor(sf::Color::White);
 		this->setSize(newSize);
 		this->setPosition(newPos);
+
+		jumpFile.loadFromFile("jump.wav");
+		jumpSFX.setBuffer(jumpFile);
 	};
 
 	double getVelocity(); 
@@ -23,4 +27,13 @@ private:
 	clock_t jumpTime = NULL;
 	const int maxJumpTime = 30;
 	const int maxFallVelocity = 10;
+
+	// jumping stuff
+	bool hasJumped = false; // for making sure the sfx only plays once
+	///jump file
+	sf::SoundBuffer jumpFile;
+	/// jump sound
+	sf::Sound jumpSFX;
+	
+
 };
