@@ -69,6 +69,16 @@ int main() {
     skyTexture.loadFromFile("sky.png");
     skyTexture.setRepeated(true);
 
+    // title
+    sf::Texture titleTexture;
+    titleTexture.loadFromFile("title.png");
+    Cloud title(sf::Vector2f(500, 200), titleTexture);
+
+    // restart prompt
+    sf::Texture restartTexture;
+    restartTexture.loadFromFile("restart.png");
+    Cloud restart(sf::Vector2f(350, 400), restartTexture);
+
     // self explanatory
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "runner game", sf::Style::Close);
     window.setFramerateLimit(100);
@@ -130,7 +140,7 @@ int main() {
 
         // check if player collides with any obstacle
         for (auto i : obVect) {
-            if (player.getGlobalBounds().intersects(i->getGlobalBounds())) {
+            if (player.getGlobalBounds().intersects(i->getGlobalBounds()) && !i->isCloud()) {
                 touchingGround = true;
             }
             //std::cout << "0: " << textures[0].getNativeHandle() << "\t1: " << textures[1].getNativeHandle() << "\t2: " << textures[2].getNativeHandle() << std::endl;
@@ -150,6 +160,24 @@ int main() {
             score++;
             scoreText.setString(std::to_string(score)); // update score
         }
+        else { /// game over
+            window.draw(restart);
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+                /// restart
+                gameOver = false;
+                
+                obVect.clear();
+                title.setPosition(sf::Vector2f(500, 200));
+
+                spawnerObj.spawnStartingGround();
+                spawnerObj.cleanOutObstacles();
+             
+                generationCounter = 1;
+                currSpeed = 4;
+                score = 0;
+                player.setPosition(sf::Vector2f(50, 200));
+            }
+        }
 
         playerAnim.setPosition(player.getPosition() - sf::Vector2f(11,0)); // offset for hitbox
 
@@ -160,10 +188,17 @@ int main() {
             window.draw(*i); 
         }
 
+        title.frameUpdate(currSpeed);
+        //window.draw(restart);
         // draw player
         //window.draw(player); // hitbox, debugging tool
+
+
+
+        window.draw(title);
         window.draw(playerAnim);
         window.draw(scoreText);
+        
 
         window.display();
     }

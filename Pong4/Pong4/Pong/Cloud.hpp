@@ -25,4 +25,9 @@ public:
 		move(-speed, 0);
 	}
 
+	// keeps track if its a cloud or not
+    bool isCloud() {
+		return true;
+	}
+
 };

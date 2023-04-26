@@ -1,9 +1,15 @@
-﻿  Player.cpp
-C:\Users\gilre\Documents\Computer Science\122\runnerGame\Pong4\Pong4\Pong\Player.cpp(18,17): warning C4244: 'argument': conversion from 'const double' to 'float', possible loss of data
-C:\Users\gilre\Documents\Computer Science\122\runnerGame\Pong4\Pong4\Pong\Player.cpp(25,17): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\gilre\Documents\Computer Science\122\runnerGame\Pong4\Pong4\Pong\Player.cpp(33,18): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+﻿  main.cpp
+C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Pong\Obstacle.hpp(39,12): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Pong\Cloud.hpp(24,20): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Pong\Hurdle.hpp(19,16): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Pong\Spawner.hpp(22,31): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Pong\main.cpp(27,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Pong\main.cpp(115,35): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Pong\main.cpp(127,28): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Pong\main.cpp(191,27): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
   Generating code
-  Previous IPDB and IOBJ mismatch, fall back to full compilation.
-  All 222 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  1 of 226 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    5 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  Pong.vcxproj -> C:\Users\gilre\Documents\Computer Science\122\runnerGame\Pong4\Pong4\Release\Pong.exe
+  Pong.vcxproj -> C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Release\Pong.exe
