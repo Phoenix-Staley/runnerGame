@@ -1,5 +1,3 @@
-//   C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame
-
 #pragma once
 
 #include <SFML/Graphics.hpp>
