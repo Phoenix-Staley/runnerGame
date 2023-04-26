@@ -101,7 +101,7 @@ int main() {
     Cloud restart(sf::Vector2f(350, 400), restartTexture);
 
     // self explanatory
-    sf::RenderWindow window(sf::VideoMode(1000, 1000), "runner game", sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode(1000, 1000), "Shroomie's Run", sf::Style::Close);
     window.setFramerateLimit(100);
     // Player object
     Player player(sf::Vector2f(59, 95), sf::Vector2f(50, 200));

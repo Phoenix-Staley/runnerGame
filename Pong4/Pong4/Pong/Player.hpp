@@ -18,8 +18,8 @@ public:
 	};
 
 	double getVelocity(); 
-	bool jumpActive(bool isTouchingGround);
-	void updateMovement(bool isTouchingGround);
+	bool jumpActive();
+	void updateMovement(bool &isTouchingGround);
 private:
 	double fallVelocity = 0;
 	const double fallSpeed = 0.35;
