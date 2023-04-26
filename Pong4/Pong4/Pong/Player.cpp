@@ -15,6 +15,12 @@ void Player::updateMovement(bool isTouchingGround)
 {
 	if (jumpActive(isTouchingGround) && (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))) // jump if conditions are met
 	{
+		/// jump sfx
+		if (!hasJumped) {
+			hasJumped = true;
+			jumpSFX.play();
+		}
+
 		this->move(0, jumpSpeed);
 		fallVelocity = jumpSpeed; // preps the velocity for when the player begins falling
 		jumpTime++;
@@ -40,6 +46,9 @@ void Player::updateMovement(bool isTouchingGround)
 		{
 			this->jumpTime = 0;
 			fallVelocity = 0;
+
+			// reset jump sfx bool
+			hasJumped = false;
 		}
 	}
 }

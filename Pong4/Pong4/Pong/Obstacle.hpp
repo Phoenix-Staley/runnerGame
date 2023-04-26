@@ -49,4 +49,9 @@ public:
 	float getSpeed() {
 		return speed;
 	}
+
+	// keeps track if its a cloud or not
+	virtual bool isCloud() {
+		return false;
+	}
 };
