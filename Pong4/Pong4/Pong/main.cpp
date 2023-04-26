@@ -73,7 +73,7 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "runner game", sf::Style::Close);
     window.setFramerateLimit(100);
     // Player object
-    Player player(sf::Vector2f(90, 95), sf::Vector2f(50, 200));
+    Player player(sf::Vector2f(59, 95), sf::Vector2f(50, 200));
 
     // creates the collection of obstacles
     // we need to have pointers, copies don't work I tried
@@ -156,10 +156,10 @@ int main() {
             player.updateMovement(touchingGround);
             playerAnim.frameUpdate(player.getVelocity());
             score++;
-            scoreText.setString(std::to_string(score));
+            scoreText.setString(std::to_string(score)); // update score
         }
 
-        playerAnim.setPosition(player.getPosition());
+        playerAnim.setPosition(player.getPosition() - sf::Vector2f(11,0)); // offset for hitbox
 
         generationCounter--;
 
@@ -169,7 +169,7 @@ int main() {
         }
 
         // draw player
-        //window.draw(player);
+        //window.draw(player); // hitbox, debugging tool
         window.draw(playerAnim);
         window.draw(scoreText);
 

@@ -13,22 +13,27 @@ bool Player::jumpActive(bool isTouchingGround)
 // gets called every frame. Jumps if pressing space, and falls if not.
 void Player::updateMovement(bool isTouchingGround)
 {
-	if (jumpActive(isTouchingGround) && sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) // jump if conditions are met
+	if (jumpActive(isTouchingGround) && (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))) // jump if conditions are met
 	{
 		this->move(0, jumpSpeed);
 		fallVelocity = jumpSpeed; // preps the velocity for when the player begins falling
 		jumpTime++;
+	}
+	else if (!isTouchingGround && sf::Keyboard::isKeyPressed(sf::Keyboard::S)) // crouch if conditions are met
+	{
+		fallVelocity = maxFallVelocity;
+		this->move(0, fallVelocity);
 	}
 	else
 	{
 		if (!isTouchingGround) // only enabled when midair
 		{
 			jumpTime = maxJumpTime + 1;
-			fallVelocity += 0.25;
+			fallVelocity += fallSpeed;
 			this->move(0, fallVelocity);
-			if (fallVelocity > 10) // max fall velocity such that player does not clip through the grass
+			if (fallVelocity > maxFallVelocity) // max fall velocity such that player does not clip through the grass
 			{
-				fallVelocity = 10;
+				fallVelocity = maxFallVelocity;
 			}
 		}
 		else // reset fall velocity and jumpTime tracking once player is on the ground again

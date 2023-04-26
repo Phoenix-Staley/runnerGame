@@ -1,6 +1,4 @@
 #pragma once
-
-//#include <cstudio>
 #include "SFML/Graphics.hpp"
 #include <iostream>
 #include <ctime>
@@ -20,7 +18,9 @@ public:
 	void updateMovement(bool isTouchingGround);
 private:
 	double fallVelocity = 0;
-	const double jumpSpeed = -7;
+	const double fallSpeed = 0.35;
+	const double jumpSpeed = -8.5;
 	clock_t jumpTime = NULL;
-	const int maxJumpTime = 20;
+	const int maxJumpTime = 30;
+	const int maxFallVelocity = 10;
 };
