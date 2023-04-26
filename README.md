@@ -12,6 +12,7 @@
 - [Description](#description)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Technologies](#technologies)
 - [Questions](#questions)
 
 ---
@@ -37,6 +38,16 @@ To run the game, open the solution file in runnerGame/pong4/pong4/Pong.sln using
 Once the game is started, press W or spacebar to jump, and S to "duck" (fall down from a jump). Jump over bushes, trees, and pits. The longer you survive, the higher your score.
 
 If you do collide with one of the obstacles, the game will pause. From here, either exit the game or press R to restart.
+
+You can watch some gameplay with a breakdown of how the code works [here](https://youtu.be/pRTaiMrrA8M).
+
+---
+
+## Technologies
+
+This game was written predominantly in C++, with some C libraries included.
+
+For a game development framework, we used SFML. This is the game framework the developers learned and worked with the most in class, hence why it was our first choice.
 
 ---
 
