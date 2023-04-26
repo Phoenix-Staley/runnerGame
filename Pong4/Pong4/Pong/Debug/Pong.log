@@ -1,10 +1,15 @@
-﻿  main.cpp
-C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Pong\Obstacle.hpp(37,12): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Pong\Cloud.hpp(24,20): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Pong\Hurdle.hpp(19,16): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Pong\Spawner.hpp(22,31): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
-C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Pong\main.cpp(48,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Pong\main.cpp(136,35): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Pong\main.cpp(148,28): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Pong\main.cpp(220,27): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-  Pong.vcxproj -> C:\Users\hundr\OneDrive\Documents\School Work\2023 SPRING\CPTS 122\Programming Assignments\runnerGame\Pong4\Pong4\Debug\Pong.exe
+﻿  Player.cpp
+C:\Users\gilre\Documents\Computer Science\122\runnerGame\Pong4\Pong4\Pong\Player.cpp(24,17): warning C4244: 'argument': conversion from 'const double' to 'float', possible loss of data
+C:\Users\gilre\Documents\Computer Science\122\runnerGame\Pong4\Pong4\Pong\Player.cpp(31,17): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\gilre\Documents\Computer Science\122\runnerGame\Pong4\Pong4\Pong\Player.cpp(39,18): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  main.cpp
+C:\Users\gilre\Documents\Computer Science\122\runnerGame\Pong4\Pong4\Pong\Obstacle.hpp(37,12): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\gilre\Documents\Computer Science\122\runnerGame\Pong4\Pong4\Pong\Cloud.hpp(24,20): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\gilre\Documents\Computer Science\122\runnerGame\Pong4\Pong4\Pong\Hurdle.hpp(19,16): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\gilre\Documents\Computer Science\122\runnerGame\Pong4\Pong4\Pong\Spawner.hpp(22,31): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+C:\Users\gilre\Documents\Computer Science\122\runnerGame\Pong4\Pong4\Pong\main.cpp(48,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\gilre\Documents\Computer Science\122\runnerGame\Pong4\Pong4\Pong\main.cpp(136,35): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\gilre\Documents\Computer Science\122\runnerGame\Pong4\Pong4\Pong\main.cpp(148,28): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\gilre\Documents\Computer Science\122\runnerGame\Pong4\Pong4\Pong\main.cpp(220,27): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  Generating Code...
+  Pong.vcxproj -> C:\Users\gilre\Documents\Computer Science\122\runnerGame\Pong4\Pong4\Debug\Pong.exe

@@ -1,7 +1,7 @@
 #include "Player.hpp"
 
 // returns whether the player can keep increasing in jump height or not. Once false, the player will begin falling
-bool Player::jumpActive(bool isTouchingGround)
+bool Player::jumpActive()
 {
 	if (this->jumpTime > this->maxJumpTime) // only lets the player jump to a certain height
 	{
@@ -11,9 +11,9 @@ bool Player::jumpActive(bool isTouchingGround)
 }
 
 // gets called every frame. Jumps if pressing space, and falls if not.
-void Player::updateMovement(bool isTouchingGround)
+void Player::updateMovement(bool &isTouchingGround)
 {
-	if (jumpActive(isTouchingGround) && (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))) // jump if conditions are met
+	if (jumpActive() && (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))) // jump if conditions are met
 	{
 		/// jump sfx
 		if (!hasJumped) {
