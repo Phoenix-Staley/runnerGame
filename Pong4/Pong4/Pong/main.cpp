@@ -32,6 +32,7 @@ int main() {
     /// background song
     sf::Sound song;
     song.setBuffer(songFile);
+    song.setVolume(55);
     song.setLoop(true);
     song.play();
 
@@ -195,6 +196,7 @@ int main() {
                 hasPlayedDeath = false;
                 obVect.clear();
                 title.setPosition(sf::Vector2f(500, 200));
+                spawnerObj.setHeight(9);
 
                 spawnerObj.spawnStartingGround();
                 spawnerObj.cleanOutObstacles();
