@@ -8,6 +8,7 @@
 #include "Obstacle.hpp"
 #include "Hurdle.hpp"
 #include "Grass.hpp"
+#include "Cloud.hpp"
 
 class Spawner {
 	public:

@@ -87,10 +87,6 @@ int main() {
     // player animation test
     Animation playerAnim(sf::Vector2f(500, 404), 10);
 
-
-    // cloud test
-    Cloud cloud(sf::Vector2f(500, 100), cloudTexture);
-
     // the sky stuff
     // i didn't make it a class because its just a static sprite
     sf::Sprite sky;
@@ -126,10 +122,6 @@ int main() {
 
         // draw the sky
         window.draw(sky);
-
-        // draw test cloud
-        cloud.frameUpdate(currSpeed);
-        window.draw(cloud);
 
         // draw each obstacle
         for (auto i : obVect) {
