@@ -14,7 +14,7 @@ public:
 	};
 
 	double getVelocity(); 
-	bool jumpActive(bool isTouchingGround);
+	bool jumpActive();
 	void updateMovement(bool isTouchingGround);
 private:
 	double fallVelocity = 0;
