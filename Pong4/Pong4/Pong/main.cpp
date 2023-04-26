@@ -5,6 +5,7 @@ CptS 122
 Side-scrolling runner game in which the player must dodge obstacles and pits to survive. Press space to jump
 */
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include <vector>
 
@@ -20,6 +21,26 @@ using std::vector;
 
 int main() {
 
+    ///song file
+    sf::SoundBuffer songFile;
+    songFile.loadFromFile("song.wav");
+
+    ///death file
+    sf::SoundBuffer deathFile;
+    deathFile.loadFromFile("death.wav");
+
+    /// background song
+    sf::Sound song;
+    song.setBuffer(songFile);
+    song.setVolume(55);
+    song.setLoop(true);
+    song.play();
+
+    /// death sound
+    sf::Sound deathSFX;
+    deathSFX.setBuffer(deathFile);
+    bool hasPlayedDeath = false;
+   
     int UNITSIZE = 96;
     bool gameOver = false;
     int score = 0;
@@ -69,8 +90,18 @@ int main() {
     skyTexture.loadFromFile("sky.png");
     skyTexture.setRepeated(true);
 
+    // title
+    sf::Texture titleTexture;
+    titleTexture.loadFromFile("title.png");
+    Cloud title(sf::Vector2f(500, 200), titleTexture);
+
+    // restart prompt
+    sf::Texture restartTexture;
+    restartTexture.loadFromFile("restart.png");
+    Cloud restart(sf::Vector2f(350, 400), restartTexture);
+
     // self explanatory
-    sf::RenderWindow window(sf::VideoMode(1000, 1000), "runner game", sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode(1000, 1000), "Shroomie's Run", sf::Style::Close);
     window.setFramerateLimit(100);
     // Player object
     Player player(sf::Vector2f(59, 95), sf::Vector2f(50, 200));
@@ -130,7 +161,7 @@ int main() {
 
         // check if player collides with any obstacle
         for (auto i : obVect) {
-            if (player.getGlobalBounds().intersects(i->getGlobalBounds())) {
+            if (player.getGlobalBounds().intersects(i->getGlobalBounds()) && !i->isCloud()) {
                 touchingGround = true;
             }
             //std::cout << "0: " << textures[0].getNativeHandle() << "\t1: " << textures[1].getNativeHandle() << "\t2: " << textures[2].getNativeHandle() << std::endl;
@@ -150,6 +181,32 @@ int main() {
             score++;
             scoreText.setString(std::to_string(score)); // update score
         }
+        else { /// game over
+            window.draw(restart);
+
+            if (!hasPlayedDeath) {
+                deathSFX.play();
+                hasPlayedDeath = true;
+            }
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+                /// restart
+                gameOver = false;
+                
+                hasPlayedDeath = false;
+                obVect.clear();
+                title.setPosition(sf::Vector2f(500, 200));
+                spawnerObj.setHeight(9);
+
+                spawnerObj.spawnStartingGround();
+                spawnerObj.cleanOutObstacles();
+             
+                generationCounter = 1;
+                currSpeed = 4;
+                score = 0;
+                player.setPosition(sf::Vector2f(50, 200));
+            }
+        }
 
         playerAnim.setPosition(player.getPosition() - sf::Vector2f(11,0)); // offset for hitbox
 
@@ -160,10 +217,17 @@ int main() {
             window.draw(*i); 
         }
 
+        title.frameUpdate(currSpeed);
+        //window.draw(restart);
         // draw player
         //window.draw(player); // hitbox, debugging tool
+
+
+
+        window.draw(title);
         window.draw(playerAnim);
         window.draw(scoreText);
+        
 
         window.display();
     }
