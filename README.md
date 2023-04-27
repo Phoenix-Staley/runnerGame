@@ -33,7 +33,7 @@ All assets are included in this repository, so no further installation is requir
 
 ## Usage
 
-To run the game, open the solution file in runnerGame/pong4/pong4/Pong.sln using Visual Studio Community. From there, you can press Ctrl + F5 to the program, or press the green run button at the top of the screen.
+To run the game, open the solution file at runnerGame/pong4/pong4/Pong.sln, using Visual Studio Community. From there, you can press Ctrl + F5 to open the program, or press the green run button at the top of the screen.
 
 Once the game is started, press W or spacebar to jump, and S to "duck" (fall down from a jump). Jump over bushes, trees, and pits. The longer you survive, the higher your score.
 
